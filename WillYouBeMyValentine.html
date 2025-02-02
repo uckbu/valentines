@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f9d7d7;
+    }
+
+    h1 {
+      margin-top: 50px;
+      color: #e74c3c;
+    }
+
+    .button-container {
+      margin-top: 150px;
+      position: relative; 
+      height: 100px; 
+    }
+
+    button, .button-link {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease, font-size 0.3s ease, left 0.5s ease;
+      position: absolute;
+      top: 0;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    #yes-button {
+      background-color: #2ecc71;
+      color: white;
+      left: 40%; 
+      transform: translateX(-50%);
+    }
+
+    #no-button {
+      background-color: #e74c3c;
+      color: white;
+      left: 60%; 
+      transform: translateX(-50%);
+    }
+
+    .image-placeholder {
+      margin-top: 200px;
+      width: 200px;
+      height: 200px;
+
+      margin-left: auto;
+      margin-right: auto;
+ 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .result-page {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .result-page img {
+      max-width: 300px;
+      margin-bottom: 20px;
+    }
+
+    .text-block {
+      font-size: 18px;
+      color: #333;
+      margin-top: 20px;
+    }
+    .image-placeholder img {
+    width: 200px;
+    height: auto;
+
+}
+  </style>
+</head>
+<body>
+  <!-- Main Page -->
+  <div id="main-page">
+    <h1 id="question-text">will you be my valentine my love?</h1>
+    <div class="button-container">
+      <a href="yes.html" id="yes-button" class="button-link">yes!!</a>
+      <button id="no-button">No</button>
+    </div>
+    <div class="image-placeholder">
+      
+      <img id='mood-image' src='happiestanh.png' alt="answer me.">
+    </div>
+  </div>
+
+  <script>
+    
+    const noButton = document.getElementById('no-button');
+    const yesButton = document.getElementById('yes-button');
+    const questionText = document.getElementById('question-text');
+    const moodImage = document.getElementById('mood-image');
+
+    let noClickCount = 0;
+
+    const questionTexts = [
+      "you sure?",
+      "no doubts?",
+      "I'll let you think again.",
+      "This is your final chance.",
+      "my poor little heart...",
+      "big choice to make."
+    ];
+    const imageSources = [
+    'happyanh.png',
+    'neturalanh.png',
+    'sad anh.png',
+    'sadanh2.png',
+    'cozyanh.png',
+
+
+    ]
+    noButton.addEventListener('click', () => {
+      noClickCount++;
+
+      if (noClickCount <= questionTexts.length) {
+        questionText.textContent = questionTexts[noClickCount - 1];
+        moodImage.src = imageSources[noClickCount - 1];
+      } else {
+        questionText.textContent = "please reconsider...";
+        moodImage.src = imageSources[imageSources.length - 1];
+      }
+
+      const yesScale = Math.pow(1.3, noClickCount);
+      yesButton.style.fontSize = `${16 * yesScale}px`;
+      yesButton.style.transform = `translateX(-50%) scale(${yesScale})`;
+
+      const noScale = 1 - (noClickCount * 0.1);
+      noButton.style.fontSize = `${16 * noScale}px`;
+      noButton.style.transform = `translateX(-50%) scale(${noScale})`;
+
+      if (noScale <= 0.5) {
+        noButton.style.fontSize = '8px';
+        noButton.style.transform = 'translateX(-50%) scale(0.5)';
+      }
+
+      if (noClickCount === 5) {
+        setTimeout(() => {
+          yesButton.style.transition = 'left 0.3s ease';
+          yesButton.style.left = 'calc(50% - 100px)';
+          setTimeout(() => {
+            yesButton.style.left = 'calc(50% + 500px)';
+            noButton.style.left = 'calc(50% + 1200px)';
+            setTimeout(() => {
+              yesButton.style.left = '50%';
+              
+              noButton.style.display = 'none';
+            }, 500);
+          }, 300);
+        }, 100);
+      }
+    });
+  </script>
+</body>
+</html>
